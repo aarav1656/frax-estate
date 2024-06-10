@@ -67,12 +67,12 @@ export const MarketProvider = ({ children }: Props) => {
           return;
         }
         const { chainId } = await web3Provider.getNetwork();
-        if (chainId !== 31337 && chainId !== 80001) {
+        if (chainId !== 11155111 && chainId !== 80001) {
           window.alert(
-            "Change your network to Mumbai Testnet or Local HardHat"
+            "Change your network to Sepolia Testnet or Local HardHat"
           );
           throw new Error(
-            "Change your network to Mumbai Testnet or Local HardHat"
+            "Change your network to Sepolia Testnet or Local HardHat"
           );
         }
         const signer = web3Provider.getSigner();
