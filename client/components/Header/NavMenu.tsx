@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { MarketContext } from "../../context";
+import { Swap } from "../swap/Swap";
 
 const styles = {
   menu: "col-[4] flex items-center justify-around",
@@ -14,6 +15,11 @@ export const NavMenu: NextPage = () => {
   const { isConnected, connectWallet } = useContext(MarketContext);
   return (
     <ul className={styles.menu}>
+      <li>
+        <Link href="/swap">
+          <a>Swap</a>
+        </Link>
+      </li>
       <li>
         <Link href="/explore">
           <a className={styles.menuItemLink}>Explore</a>
