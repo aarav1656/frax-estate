@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  ERC721URIStorage,
-  ERC721URIStorageInterface,
-} from "../../../../../../@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage";
+  IERC4906,
+  IERC4906Interface,
+} from "../../../../@openzeppelin/contracts/interfaces/IERC4906";
 
 const _abi = [
   {
@@ -147,7 +147,7 @@ const _abi = [
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "balance",
         type: "uint256",
       },
     ],
@@ -166,7 +166,7 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "",
+        name: "operator",
         type: "address",
       },
     ],
@@ -198,19 +198,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "name",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -222,7 +209,7 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "",
+        name: "owner",
         type: "address",
       },
     ],
@@ -318,38 +305,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "symbol",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "tokenURI",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -374,15 +329,15 @@ const _abi = [
   },
 ] as const;
 
-export class ERC721URIStorage__factory {
+export class IERC4906__factory {
   static readonly abi = _abi;
-  static createInterface(): ERC721URIStorageInterface {
-    return new utils.Interface(_abi) as ERC721URIStorageInterface;
+  static createInterface(): IERC4906Interface {
+    return new utils.Interface(_abi) as IERC4906Interface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): ERC721URIStorage {
-    return new Contract(address, _abi, signerOrProvider) as ERC721URIStorage;
+  ): IERC4906 {
+    return new Contract(address, _abi, signerOrProvider) as IERC4906;
   }
 }

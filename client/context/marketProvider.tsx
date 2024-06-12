@@ -62,6 +62,7 @@ export const MarketProvider = ({ children }: Props) => {
         window.ethereum.isMetaMask
       ) {
         const web3Provider = await connect();
+        console.log(web3Provider)
         if (!web3Provider) {
           toast.error("An error was ocurred when try to connect your wallet");
           return;
