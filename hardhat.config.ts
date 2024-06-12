@@ -19,6 +19,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
+
+
 const config: HardhatUserConfig = {
   solidity: "0.8.7",
   networks: {
@@ -31,7 +33,7 @@ const config: HardhatUserConfig = {
       allowUnlimitedContractSize: true,
     },
     sepolia: {
-      url: process.env.SEPOLIA_URL,
+      url: "https://eth-sepolia.g.alchemy.com/v2/demo",
       chainId: 11155111,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
