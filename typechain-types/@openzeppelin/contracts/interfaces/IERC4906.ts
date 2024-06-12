@@ -25,22 +25,19 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../../common";
+} from "../../../common";
 
-export interface IERC721MetadataInterface extends utils.Interface {
+export interface IERC4906Interface extends utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
   };
 
@@ -50,14 +47,11 @@ export interface IERC721MetadataInterface extends utils.Interface {
       | "balanceOf"
       | "getApproved"
       | "isApprovedForAll"
-      | "name"
       | "ownerOf"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
       | "setApprovalForAll"
       | "supportsInterface"
-      | "symbol"
-      | "tokenURI"
       | "transferFrom"
   ): FunctionFragment;
 
@@ -77,7 +71,6 @@ export interface IERC721MetadataInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
@@ -107,11 +100,6 @@ export interface IERC721MetadataInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     values: [PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "tokenURI",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
     values: [
@@ -131,7 +119,6 @@ export interface IERC721MetadataInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom(address,address,uint256)",
@@ -149,8 +136,6 @@ export interface IERC721MetadataInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
@@ -159,11 +144,15 @@ export interface IERC721MetadataInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
+    "BatchMetadataUpdate(uint256,uint256)": EventFragment;
+    "MetadataUpdate(uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "BatchMetadataUpdate"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MetadataUpdate"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -191,6 +180,28 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
+export interface BatchMetadataUpdateEventObject {
+  _fromTokenId: BigNumber;
+  _toTokenId: BigNumber;
+}
+export type BatchMetadataUpdateEvent = TypedEvent<
+  [BigNumber, BigNumber],
+  BatchMetadataUpdateEventObject
+>;
+
+export type BatchMetadataUpdateEventFilter =
+  TypedEventFilter<BatchMetadataUpdateEvent>;
+
+export interface MetadataUpdateEventObject {
+  _tokenId: BigNumber;
+}
+export type MetadataUpdateEvent = TypedEvent<
+  [BigNumber],
+  MetadataUpdateEventObject
+>;
+
+export type MetadataUpdateEventFilter = TypedEventFilter<MetadataUpdateEvent>;
+
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -203,12 +214,12 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface IERC721Metadata extends BaseContract {
+export interface IERC4906 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IERC721MetadataInterface;
+  interface: IERC4906Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -252,8 +263,6 @@ export interface IERC721Metadata extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -285,13 +294,6 @@ export interface IERC721Metadata extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -321,8 +323,6 @@ export interface IERC721Metadata extends BaseContract {
     operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
-
-  name(overrides?: CallOverrides): Promise<string>;
 
   ownerOf(
     tokenId: PromiseOrValue<BigNumberish>,
@@ -355,13 +355,6 @@ export interface IERC721Metadata extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  symbol(overrides?: CallOverrides): Promise<string>;
-
-  tokenURI(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   transferFrom(
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
@@ -391,8 +384,6 @@ export interface IERC721Metadata extends BaseContract {
       operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    name(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
@@ -425,13 +416,6 @@ export interface IERC721Metadata extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    symbol(overrides?: CallOverrides): Promise<string>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -462,6 +446,18 @@ export interface IERC721Metadata extends BaseContract {
       operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
+
+    "BatchMetadataUpdate(uint256,uint256)"(
+      _fromTokenId?: null,
+      _toTokenId?: null
+    ): BatchMetadataUpdateEventFilter;
+    BatchMetadataUpdate(
+      _fromTokenId?: null,
+      _toTokenId?: null
+    ): BatchMetadataUpdateEventFilter;
+
+    "MetadataUpdate(uint256)"(_tokenId?: null): MetadataUpdateEventFilter;
+    MetadataUpdate(_tokenId?: null): MetadataUpdateEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
@@ -498,8 +494,6 @@ export interface IERC721Metadata extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    name(overrides?: CallOverrides): Promise<BigNumber>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -528,13 +522,6 @@ export interface IERC721Metadata extends BaseContract {
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -569,8 +556,6 @@ export interface IERC721Metadata extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -599,13 +584,6 @@ export interface IERC721Metadata extends BaseContract {
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

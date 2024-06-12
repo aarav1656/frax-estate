@@ -10,8 +10,10 @@ import { DATA_URL } from "../utils";
 import { TransactionProgress } from "../components/common";
 import { UploadIcon } from "@heroicons/react/solid";
 
+const NEXT_PUBLIC_VERCEL_NFT_STORAGE_TOKEN="dbef1b59.fd420d1e9a80451c834854ee38c005e2"
+
 const client = new NFTStorage({
-  token: process.env.NEXT_PUBLIC_VERCEL_NFT_STORAGE_TOKEN!,
+  token: NEXT_PUBLIC_VERCEL_NFT_STORAGE_TOKEN ,
 });
 interface NFTForm {
   price: string;

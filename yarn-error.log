@@ -1,0 +1,63 @@
+Arguments: 
+  /home/aarav/.nvm/versions/node/v21.4.0/bin/node /home/aarav/.yarn/bin/yarn.js
+
+PATH: 
+  /home/aarav/.fuelup/bin:/home/aarav/.yarn/bin:/home/aarav/.config/yarn/global/node_modules/.bin:/home/aarav/.local/share/koii/install/active_release/bin:/home/aarav/.local/bin:/home/aarav/.fuelup/bin:/home/aarav/.yarn/bin:/home/aarav/.config/yarn/global/node_modules/.bin:/home/aarav/.local/share/pnpm:/home/aarav/.nvm/versions/node/v21.4.0/bin:/home/aarav/.local/share/koii/install/active_release/bin:/home/aarav/.cargo/bin:/home/aarav/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/aarav/.foundry/bin:/home/aarav/.foundry/bin:/home/aarav/.foundry/bin:/home/aarav/.foundry/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  21.4.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@nomiclabs%2fhardhat-ethers: ETIMEDOUT
+      at Timeout._onTimeout (/home/aarav/.yarn/lib/cli.js:141550:19)
+      at listOnTimeout (node:internal/timers:573:17)
+      at process.processTimers (node:internal/timers:514:7)
+
+npm manifest: 
+  {
+    "name": "nft-marketplace",
+    "version": "1.0.0",
+    "description": "NFT Marketplace",
+    "main": "index.js",
+    "scripts": {
+      "deploy:local": "hardhat run --network localhost scripts/deploy.ts",
+      "deploy:mumbai": "hardhat run --network mumbai scripts/deploy.ts",
+      "test": "yarn hardhat test",
+      "compile": "yarn hardhat compile",
+      "start:localNode": "yarn hardhat node",
+      "clean": "yarn hardhat clean"
+    },
+    "repository": "git@github.com:elPoeta/nft-marketplace.git",
+    "author": "Leonardo Tosetto <leonardo.a.tosetto@gmail.com>",
+    "license": "MIT",
+    "devDependencies": {
+      "@nomiclabs/hardhat-ethers": "^2.0.6",
+      "@nomiclabs/hardhat-waffle": "^2.0.3",
+      "@openzeppelin/contracts": "^4.7.0",
+      "@typechain/ethers-v5": "^10.1.0",
+      "@typechain/hardhat": "^6.1.2",
+      "@types/chai": "^4.3.1",
+      "@types/mocha": "^9.1.1",
+      "chai": "^4.3.6",
+      "dotenv": "^16.0.1",
+      "ethereum-waffle": "^3.4.4",
+      "ethers": "^5.6.9",
+      "hardhat": "^2.9.9",
+      "solhint": "^3.3.7",
+      "ts-node": "^10.8.2",
+      "typechain": "^8.1.0",
+      "typescript": "^4.7.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
